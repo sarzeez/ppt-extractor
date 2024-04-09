@@ -19,6 +19,7 @@ def home(request):
             case "format1_csv":
                 return generate_csv(extract_text_from_ppt_1(uploaded_file), filename)
             case "format2_csv":
+                # return render(request, 'home.html', {})
                 return generate_csv(extract_text_from_ppt_2(uploaded_file), filename)
             case "format1_xlsx":
                 return generate_excel(extract_text_from_ppt_1(uploaded_file), filename)

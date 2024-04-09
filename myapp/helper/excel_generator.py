@@ -12,8 +12,7 @@ def generate_excel(data, filename):
     # Write data
     for slide in data:
         for event in slide['events']:
-            actions_with_period = [action.strip() + '.' if not action.strip().endswith('.') else action.strip() for action in event['actions']]
-            actions_str = ' '.join(actions_with_period)
+            actions_str = ' '.join(event['actions'])
             ws.append([slide['title'], event['title'], actions_str])
 
     # Save the workbook to a BytesIO object

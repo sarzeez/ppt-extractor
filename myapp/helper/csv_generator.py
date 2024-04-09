@@ -16,9 +16,8 @@ def generate_csv(data, filename):
     # Write data
     for slide in data:
         for event in slide['events']:
-            actions_with_period = [action.strip() + '.' if not action.strip().endswith('.') else action.strip() for action in event['actions']]
-            actions_str = ' '.join(actions_with_period)
-            csv_writer.writerow([slide['title'], event['title'], actions_str])
+            actions_str = '\n'.join(event['actions'])
+            csv_writer.writerow([slide['title'], event['title'], f'{actions_str}'])
     
     # Reset the StringIO object pointer
     csv_buffer.seek(0)
