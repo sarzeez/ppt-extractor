@@ -47,3 +47,26 @@ def extract_text_from_ppt_2(ppt_file):
 
     return slides_data
 
+# concept type
+def extract_text_from_ppt_3(ppt_file):
+    presentation = Presentation(ppt_file)
+    slides_data = []
+
+    for slide in presentation.slides:
+        slide_data = {}
+
+        if slide.shapes:
+            slide_text = [shape.text.strip() for shape in slide.shapes if shape.has_text_frame]
+            if slide_text:
+                slide_data["name"] = slide_text[0]
+                description = slide_text[1:-1] if len(slide_text) > 2 else []
+                formatted_description = []
+                for line in description:
+                    formatted_lines = [l for l in line.split('\n') if l.strip()]  # Filter out empty lines
+                    formatted_description.extend(formatted_lines[1:])  # Exclude the first index
+                slide_data["description"] = formatted_description
+
+        slides_data.append(slide_data)
+
+    return slides_data
+
