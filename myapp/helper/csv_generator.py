@@ -49,3 +49,26 @@ def generate_concept_csv(data, filename):
     content_disposition = "attachment; filename=" + filename + ".csv"
     response['Content-Disposition'] = content_disposition
     return response
+
+def generate_module_csv(data, filename):
+    # Create a StringIO object to store CSV data
+    csv_buffer = io.StringIO()
+    
+    # Create a CSV writer
+    csv_writer = csv.writer(csv_buffer)
+    
+    # Write headers
+    csv_writer.writerow(['Section Name', 'Introduction Text'])
+    
+    # Write data
+    for slide in data:
+        description_str = '\n'.join(slide['description'])
+        csv_writer.writerow([slide['name'], f'{description_str}'])
+    
+    # Reset the StringIO object pointer
+    csv_buffer.seek(0)
+
+    response = HttpResponse(csv_buffer, content_type='text/csv')
+    content_disposition = "attachment; filename=" + filename + ".csv"
+    response['Content-Disposition'] = content_disposition
+    return response

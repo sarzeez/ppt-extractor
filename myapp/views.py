@@ -1,8 +1,8 @@
 from django.shortcuts import redirect, render
 
-from .helper.excel_generator import generate_excel, generate_concept_excel
-from .helper.csv_generator import generate_csv, generate_concept_csv 
-from .helper.ppt_extractors import extract_text_from_ppt_1, extract_text_from_ppt_2, extract_text_from_ppt_3
+from .helper.excel_generator import generate_excel, generate_concept_excel, generate_module_excel
+from .helper.csv_generator import generate_csv, generate_concept_csv, generate_module_csv
+from .helper.ppt_extractors import extract_text_from_ppt_1, extract_text_from_ppt_2, extract_text_from_ppt_3, extract_text_from_ppt_4
 
 
 # Create your views here.
@@ -28,6 +28,10 @@ def home(request):
                 return generate_concept_csv(extract_text_from_ppt_3(uploaded_file), filename)
             case "concept_xlsx":
                 return generate_concept_excel(extract_text_from_ppt_3(uploaded_file), filename)
+            case "section_module_csv":
+                return generate_module_csv(extract_text_from_ppt_4(uploaded_file), filename)
+            case "section_module_xlsx":
+                return generate_module_excel(extract_text_from_ppt_4(uploaded_file), filename)
             case _:
                 return redirect('home')
     return render(request, 'home.html', {})

@@ -70,3 +70,29 @@ def extract_text_from_ppt_3(ppt_file):
 
     return slides_data
 
+# module type
+def extract_text_from_ppt_4(ppt_file):
+    presentation = Presentation(ppt_file)
+    slides_data = []
+
+    for slide in presentation.slides:
+        slide_data = []
+        for shape in slide.shapes:
+            if hasattr(shape, "text") and shape.text.strip():  # Exclude empty strings
+                slide_data.append(shape.text)
+        if slide_data:  # Append only if there's non-empty text in the slide
+            name = slide_data[0]
+            description = []
+            for text in slide_data[1:]:
+                if '\n' in text:
+                    description.extend(text.split('\n'))
+                else:
+                    description.append(text)
+            description = [text for text in description if text.strip()]  # Exclude empty strings
+            slides_data.append({
+                "name": name,
+                "description": description
+            })
+
+    return slides_data
+
